@@ -52,3 +52,11 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+*.vsidx
+/.vs/e-commerce-store-react/v17/DocumentLayout.backup.json
+/.vs/e-commerce-store-react/v17/DocumentLayout.json
+/.vs/e-commerce-store-react/v17/.suo
+/.vs/e-commerce-store-react/v17/.wsuo
+/.vs/e-commerce-store-react/DesignTimeBuild/.dtbcache.v2
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
