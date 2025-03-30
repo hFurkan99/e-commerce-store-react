@@ -46,8 +46,8 @@ public class ProductService(
     {
         var product = await productRepository.GetByIdAsync(id);
 
-        if(product is null) return 
-            ServiceResult<ProductDto?>.Fail("Product not found", HttpStatusCode.NotFound);
+        if(product is null)
+            return ServiceResult<ProductDto?>.Fail("Product not found", HttpStatusCode.NotFound);
 
         var productAsDto = mapper.Map<ProductDto>(product);
 
