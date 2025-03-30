@@ -60,3 +60,7 @@ nunit-*.xml
 /.vs/e-commerce-store-react/DesignTimeBuild/.dtbcache.v2
 /.vs/slnx.sqlite
 /.vs/VSWorkspaceState.json
+/.vs/e-commerce-store-react/config/applicationhost.config
+/.vs/e-commerce-store-react/v17/ResourceExplorer/settings.json
+/.vs/e-commerce-store-react/v17/.futdcache.v2
+*.v9.bin

@@ -13,6 +13,7 @@ public static class ControllerExtensions
         });
 
         services.AddOpenApi();
+        services.AddCors();
 
         return services;    
     }

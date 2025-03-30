@@ -18,6 +18,11 @@ namespace App.API.Extensions
 
             app.UseHttpsRedirection();
 
+            app.UseCors(option =>
+            {
+                option.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000");
+            });
+
             app.UseAuthorization();
 
             return app;
