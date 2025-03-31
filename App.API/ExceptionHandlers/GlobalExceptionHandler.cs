@@ -8,9 +8,16 @@ public class GlobalExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        var errorAsDto = ServiceResult.Fail(exception.Message, HttpStatusCode.InternalServerError);
+        var statusCode = HttpStatusCode.InternalServerError;
 
-        httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        if (exception is HttpRequestException httpRequestException && httpRequestException.StatusCode.HasValue)
+        {
+            statusCode = httpRequestException.StatusCode.Value;
+        }
+
+        var errorAsDto = ServiceResult.Fail(exception.Message, statusCode);
+
+        httpContext.Response.StatusCode = (int)statusCode;
         httpContext.Response.ContentType = "application/json";
         await httpContext.Response.WriteAsJsonAsync(errorAsDto, cancellationToken);
 

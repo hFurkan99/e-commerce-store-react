@@ -13,15 +13,12 @@ const CustomBaseQuery = fetchBaseQuery({
 
 type ErrorResponse = { errorMessages: string[] };
 
-const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
-
 export const baseQueryWithErrorHandling = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
   extraOptions: object
 ) => {
   api.dispatch(startLoading());
-  await sleep();
   const result = await CustomBaseQuery(args, api, extraOptions);
   api.dispatch(stopLoading());
 

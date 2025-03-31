@@ -6,6 +6,7 @@ namespace App.Application;
 public class ServiceResult<T>
 {
     public T? Data { get; set; }
+    public string? Message { get; set; }
     public List<string>? ErrorMessages { get; set; }
     [JsonIgnore] public bool IsSuccess => ErrorMessages == null || ErrorMessages.Count == 0;
     [JsonIgnore] public bool IsFail => !IsSuccess;
@@ -13,9 +14,9 @@ public class ServiceResult<T>
     [JsonIgnore] public string? UrlAsCreated { get; set; }
 
 
-    public static ServiceResult<T> Success(T data, HttpStatusCode statusCode = HttpStatusCode.OK)
+    public static ServiceResult<T> Success(T data, HttpStatusCode statusCode = HttpStatusCode.OK, string? message = null)
     {
-        return new ServiceResult<T> { Data = data, StatusCode = statusCode };
+        return new ServiceResult<T> { Data = data, StatusCode = statusCode, Message = message };
     }
 
     public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated)
@@ -36,6 +37,7 @@ public class ServiceResult<T>
 
 public class ServiceResult
 {
+    public string? Message { get; set; }
     public List<string>? ErrorMessages { get; set; }
     [JsonIgnore] public HttpStatusCode StatusCode { get; set; }
     [JsonIgnore] public bool IsSuccess => ErrorMessages == null || ErrorMessages.Count == 0;
@@ -43,9 +45,9 @@ public class ServiceResult
     [JsonIgnore] public string? UrlAsCreated { get; set; }
 
 
-    public static ServiceResult Success(HttpStatusCode statusCode = HttpStatusCode.OK)
+    public static ServiceResult Success(HttpStatusCode statusCode = HttpStatusCode.OK, string? message = null)
     {
-        return new ServiceResult { StatusCode = statusCode };
+        return new ServiceResult { StatusCode = statusCode, Message = message };
     }
 
     public static ServiceResult SuccessAsCreated(string urlAsCreated)

@@ -1,5 +1,6 @@
 ﻿using App.Application.Contracts.Persistence;
 using App.Domain.Options;
+using App.Persistence.Baskets;
 using App.Persistence.Interceptors;
 using App.Persistence.Products;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ public static class RepositoryExtensions
         });
 
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IBasketRepository, BasketRepository>();
+
         services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -1,6 +1,5 @@
 ﻿using App.Application.Contracts.Persistence;
 using App.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace App.Persistence.Products;
 

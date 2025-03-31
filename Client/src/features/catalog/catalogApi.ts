@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Product } from "../../app/models/product";
+import { Product } from "../../app/models/products/product";
 import { baseQueryWithErrorHandling } from "../../app/api/baseApi";
 
 export const catalogApi = createApi({

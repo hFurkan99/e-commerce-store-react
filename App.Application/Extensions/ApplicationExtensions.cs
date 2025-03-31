@@ -7,6 +7,7 @@ using App.Application.Features.Products;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using App.Application.Features.Baskets;
 
 namespace App.Application.Extensions;
 
@@ -29,6 +30,7 @@ public static class ApplicationExtensions
         });
 
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IBasketService, BasketService>();
 
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

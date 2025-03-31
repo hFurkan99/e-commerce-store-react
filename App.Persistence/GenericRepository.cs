@@ -13,7 +13,20 @@ public class GenericRepository<T, TKey>(AppDbContext context) : IGenericReposito
 
     public Task<List<T>> GetAllAsync() => _dbSet.AsNoTracking().ToListAsync();
 
-    public IQueryable<T> Where(Expression<Func<T, bool>> predicate) => _dbSet.Where(predicate).AsNoTracking();
+    public async Task<List<T>> WhereAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbSet
+            .Where(predicate)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbSet
+            .AsNoTracking()
+            .FirstOrDefaultAsync(predicate);
+    }
 
     public Task<bool> AnyAsync(TKey id) => _dbSet.AnyAsync(x => x.Id.Equals(id));
 

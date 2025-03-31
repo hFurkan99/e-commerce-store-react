@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Product } from "../../app/models/product";
+import { Product } from "../../app/models/products/product";
 import ProductCard from "./ProductCard";
 
 type Props = {
