@@ -1,4 +1,5 @@
-﻿using App.Domain.Entities.Common;
+﻿using App.Application.Helpers;
+using App.Domain.Entities.Common;
 using System.Linq.Expressions;
 
 namespace App.Application.Contracts.Persistence;
@@ -15,4 +16,5 @@ public interface IGenericRepository<T, TKey> where T : class where TKey : struct
     ValueTask AddAsync(T entity);
     void Update(T entity);
     void Delete(T entity);
+    Task<PagedList<T>> ToPagedList(IQueryable<T> query, int pageNumber, int pageSize);
 }

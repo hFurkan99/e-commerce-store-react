@@ -1,12 +1,30 @@
 ﻿using App.Application.Features.Products;
 using App.Application.Features.Products.Create;
+using App.Application.Features.Products.Get;
 using App.Application.Features.Products.Update;
+using App.Application.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.API.Controllers;
 
 public class ProductsController(IProductService productService) : CustomBaseController
 {
+    [HttpGet]
+    public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request) 
+    {   
+        var products = await productService.GetProductsAsync(request);
+
+        if(products?.Data?.Count > 0)
+        {
+            Response.AddPaginationHeader(products.Data.Metadata);
+        }
+
+        return CreateActionResult(products!);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetProductFilters() => CreateActionResult(await productService.GetProductFiltersAsync());
+
     [HttpGet]
     public async Task<IActionResult> GetAll() => CreateActionResult(await productService.GetAllAsync());
 

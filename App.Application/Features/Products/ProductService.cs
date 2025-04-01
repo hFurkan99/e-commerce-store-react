@@ -1,6 +1,7 @@
 ﻿using App.Application.Contracts.Persistence;
 using App.Application.Features.Products.Create;
 using App.Application.Features.Products.Dto;
+using App.Application.Features.Products.Get;
 using App.Application.Features.Products.Update;
 using App.Domain.Entities;
 using App.Domain.Entities.Common;
@@ -14,6 +15,22 @@ public class ProductService(
     IUnitOfWork unitOfWork,
     IMapper mapper) : IProductService
 {
+    public async Task<ServiceResult<PagedList<ProductDto>>> GetProductsAsync(GetProductsRequest request)
+    {
+        var products = await productRepository.GetProductsAsync(request);
+
+        var productsAsDto = products.Select(product => mapper.Map<ProductDto>(product)).ToList();
+
+        var pagedList = new PagedList<ProductDto>(productsAsDto, products.Metadata.TotalCount, request.PageNumber, request.PageSize);
+
+        return ServiceResult<PagedList<ProductDto>>.Success(pagedList);
+    }
+
+    public async Task<ServiceResult<GetProductFiltersResponse>> GetProductFiltersAsync()
+    {
+        var productFilters = await productRepository.GetProductFiltersAsync();
+        return ServiceResult<GetProductFiltersResponse>.Success(productFilters);
+    }
 
     public async Task<ServiceResult<IEnumerable<ProductDto>>> GetAllAsync()
     {
