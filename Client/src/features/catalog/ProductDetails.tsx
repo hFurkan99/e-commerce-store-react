@@ -12,14 +12,54 @@ import {
   Typography,
 } from "@mui/material";
 import { useFetchProductDetailQuery } from "./catalogApi";
+import {
+  useAddItemToBasketMutation,
+  useFetchBasketQuery,
+  useRemoveItemFromBasketMutation,
+} from "../basket/basketApi";
+import { ChangeEvent, useEffect, useState } from "react";
 export default function ProductDetails() {
   const { id } = useParams();
+
+  const [addItemToBasket] = useAddItemToBasketMutation();
+  const [removeItemFromBasket] = useRemoveItemFromBasketMutation();
+  const { data } = useFetchBasketQuery(3);
+  const item = data?.basket.items.find((x) => x.product.id === parseInt(id!));
+  const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    if (item) setQuantity(item.quantity);
+  }, [item]);
 
   const { data: product, isLoading } = useFetchProductDetailQuery(
     id ? parseInt(id) : 0
   );
 
   if (!product || isLoading) return;
+
+  const handleUpdateBasket = () => {
+    const updatedQuantity = item
+      ? Math.abs(quantity - item.quantity)
+      : quantity;
+
+    if (!item || quantity > item.quantity)
+      addItemToBasket({
+        basketId: 3,
+        productId: product.id,
+        quantity: updatedQuantity,
+      });
+    else
+      removeItemFromBasket({
+        basketId: 3,
+        productId: product.id,
+        quantity: updatedQuantity,
+      });
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event?.currentTarget.value);
+    if (value >= 0) setQuantity(value);
+  };
 
   const productDetails = [
     { label: "Name", value: product.name },
@@ -69,18 +109,23 @@ export default function ProductDetails() {
               type="number"
               label="Quantity in basket"
               fullWidth
-              defaultValue={1}
+              value={quantity}
+              onChange={handleInputChange}
             />
           </Grid>
           <Grid size={6}>
             <Button
+              onClick={handleUpdateBasket}
+              disabled={
+                quantity === item?.quantity || (!item && quantity === 0)
+              }
               color="primary"
               size="large"
               variant="contained"
               fullWidth
               sx={{ height: "55px" }}
             >
-              Add to basket
+              {item ? "Update quantity" : "Add to basket"}
             </Button>
           </Grid>
         </Grid>

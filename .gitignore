@@ -64,3 +64,4 @@ nunit-*.xml
 /.vs/e-commerce-store-react/v17/ResourceExplorer/settings.json
 /.vs/e-commerce-store-react/v17/.futdcache.v2
 *.v9.bin
+.vs/e-commerce-store-react/v17/HierarchyCache.v1.txt
