@@ -48,8 +48,9 @@ public class ProductRepository(AppDbContext context) : GenericRepository<Product
             query = request.OrderBy.ToLower() switch
             {
                 "name" => request.Descending ? query.OrderByDescending(x => x.Name) : query.OrderBy(x => x.Name),
-                "price" => request.Descending ? query.OrderByDescending(x => x.Price) : query.OrderBy(x => x.Price),
-                "createdat" => request.Descending ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt),
+                "price" => query.OrderBy(x => x.Price),
+                "pricedesc" => query.OrderByDescending(x => x.Price),
+                "createdate" => request.Descending ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt),
                 _ => throw new ArgumentException($"Invalid order by field: {request.OrderBy}"),
             };
         }
